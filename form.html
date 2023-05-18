@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Clothing Inventory</title>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="form.css" />
+        <link rel="stylesheet" href="main2.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="sidebar open">
+            <div class="logo_details">
+                <i class='bx bxl-xing icon'></i>
+                <div class="logo_name">Project</div>
+                <i class="bx bx-menu" id="btn"></i>
+            </div>
+            <ul class="nav-list">
+                <li>
+                    <a href="main.html">
+                        <i class='bx bx-home'></i>
+                        <span class="link_name">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="form.html">
+                        <i class='bx bxs-shopping-bag'></i>
+                        <span class="link_name">Register Product</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="table.html">
+                        <i class='bx bx-store'></i>
+                        <span class="link_name">Inventory</span>
+                    </a>
+                </li>
+                <li class="profile">
+                    <div class="profile_details">
+                        <i class='bx bx-user toggle'></i>
+                        <div class="name">Admin</div>
+                        <i class="bx bx-log-out" id="logout"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <section class="container">
+            <header>Product Form</header>
+            <form id="insert-form" method="post" autocomplete="off" class="form">
+                <div class="input-box">
+                    <label>Product</label>
+                    <input type="text" id="product" name="product" placeholder="Enter Product name" required />
+                </div>
+                <div class="input-box">
+                    <label>Description</label>
+                    <input type="text" id="description" name="description" placeholder="Enter Description" required />
+                </div>
+                <div class="column">
+                    <div class="input-box">
+                        <label>Quantity</label>
+                        <input type="number" id="quantity" name="quantity" placeholder="Enter Quantity number" required />
+                    </div>
+                </div>
+                <div class="gender-box">
+                    <h3>Product Type</h3>
+                    <div class="gender-select">
+                        <select id="gender", name="gender">
+                            <option value="">Select</option>
+                            <option value="Kid">Kid</option>
+                            <option value="Men">Men</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box address">
+                    <label>Price</label>
+                    <input type="text" id="price" name="price" placeholder="Enter price" required />
+                <div class="input_field">
+                        <input type="submit" value="Submit" class="btn" id="register">
+                </div>
+                </div>
+            </form>
+        </section>
+        <script>
+            const sidebar = document.querySelector(".sidebar");
+            const closeBtn = document.querySelector("#btn");
+            closeBtn.addEventListener("click",function(){
+                sidebar.classList.toggle("open")
+          })
+        </script>
+        <script>
+            $(document).ready(function(){
+                $('input[type="text"]').val('');
+                $('select').val('Select');
+                $('input[type="number"]').val('');
+            $("#register").click( function(event) {
+                    event.preventDefault();
+                    // serialize form data
+                    var formData =  $("#insert-form").serializeArray();
+
+                    console.log(JSON.stringify(formData));
+
+                    // send AJAX request
+                    $.ajax({
+                        url: 'http://172.17.100.12:8081/rubilla/cgi-bin/post.o',
+                        type:'POST',
+                        data: JSON.stringify(formData),
+                        contentType:'application/json',
+                        dataType:'json',
+                        success: function(response) {
+                            if (response.status === "success") {
+                                console.log(response.message)
+                                console.log(response.data)
+
+                                $('input[type="text"]').val('');
+                                $('select').val('Select');
+                                $('input[type="number"]').val('');
+
+
+                            }  else if (response.status === "error") {
+                                console.log(response.message)
+                                console.log(response.message_additional)
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(xhr.responseText);
+                        }
+                      });
+                });
+            });
+        </script>
+  </body>
+</html>
