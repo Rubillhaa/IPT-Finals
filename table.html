@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
+    <title>Clothing Inventory</title>
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="main3.css">
+
+</head>
+<body>
+    <div class="table-wrapper" id="box">
+        <div class="sidebar open">
+            <div class="logo_details">
+                <i class='bx bxl-xing icon'></i>
+                <div class="logo_name">Project</div>
+                <i class="bx bx-menu" id="btn"></i>
+            </div>
+            <ul class="nav-list">
+                <li>
+                    <a href="main.html">
+                        <i class='bx bx-home'></i>
+                        <span class="link_name">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="form.html">
+                        <i class='bx bxs-shopping-bag'></i>
+                        <span class="link_name">Register Product</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="table.html">
+                        <i class='bx bx-store'></i>
+                        <span class="link_name">Inventory</span>
+                    </a>
+                </li>
+                <li class="profile">
+                    <div class="profile_details">
+                        <i class='bx bx-user toggle'></i>
+                        <div class="name">Admin</div>
+                        <i class="bx bx-log-out" id="logout"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    <div class="search-container" id="search-container">
+        <input type="text" id="id" name="id" class="search">
+        <input type="submit" value="Search" class="search-btn" id="search-btn">
+        <input type="submit" value="Delete" class="delete-btn" id="delete-btn">
+    </div>
+        <div class="table-wrapper">
+        <table id="table" class="table">
+            <thead>
+                <tr>
+                <th scope="col">Product ID</th>
+                <th scope="col">Product</th>
+                <th scope="col">Description</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Product Type</th>
+                <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    
+   
+    
+
+    <script id="results" type="text/x-handlebars-template">
+        {{#each data}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{product}}</td>
+                <td>{{description}}</td>
+                <td>{{quantity}}</td>
+                <td>{{gender}}</td>
+                <td>{{price}}</td>
+            </tr>
+        {{/each}}
+    </script>
+    <script>
+    function get(choice) {
+        var formData =  $("#id").serializeArray();
+        console.log(JSON.stringify(formData));
+        const url = choice ? 'http://172.17.100.12:8081/rubilla/cgi-bin/get.o' : 'http://172.17.100.12:8081/rubilla/cgi-bin/delete.o'
+        
+          // send AJAX request
+        $.ajax({
+            url: url,
+            type:'POST',
+            data: JSON.stringify(formData),
+            contentType:'application/json',
+            dataType:'json',
+            success: function(response) {
+                if (response.status === "success") {
+                    //console.log(response.message)
+                    // console.log(response)
+                    console.log(response.data)  
+
+                    if (choice){
+                            var template = Handlebars.compile($("#results").html());
+                            var html = template(response);
+
+                            $("#tbody").html(html);
+                    }else{
+                        $('input[type="text"]').val('');
+                        get(true);
+                    }
+
+                }  else if (response.status === "error") {
+                    console.log(response.message)
+                    console.log(response.message_additional)                                 
+                }               
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+    }
+    get(true);
+
+        $(document).ready(function() {
+
+            $('input[type="text"]').val('');
+            $('select').val('Select');
+            $('input[type="number"]').val('');
+
+            $('#search-btn').click(function(event) {
+                event.preventDefault();
+                M.Toast.dismissAll();
+                get(true);
+            });
+            $('#delete-btn').click(function(event) {
+                event.preventDefault();
+                M.Toast.dismissAll();
+                get(false);
+            });
+        });
+    </script>
+    <script>
+        const sidebar = document.querySelector(".sidebar");
+        const closeBtn = document.querySelector("#btn");
+        closeBtn.addEventListener("click",function(){
+            sidebar.classList.toggle("open")
+      });
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+.search-container{
+  width: 1000px;
+  height: 50px;
+  position: absolute;
+  left: 80px;
+  top: 10px;
+}
+
+#search{
+  width: 200px;
+  padding: 2px 2px;
+  outline: none;
+  border: 1px solid #f0f0f0;
+  border-radius: 1px;
+  margin: 3px 0 0 3;
+  transition: all 0.3 ease;
+}
+
+.search-container #search:focus{
+  border: 1px solid #757575;
+}
+
+.search-btn, .delete-btn{
+  width: 70px;
+  padding: 3px 3px;
+  font-size: 15px;
+  border: 0;
+  background: #ffffff;
+  color: #737373;
+  cursor: pointer;
+  border-radius: 3px;
+  margin: 3px 0 0 3;
+}
+
+.search-container .search-btn:hover, .search-container .delete-btn:hover{
+  background: #464545;
+  color: #fdfdfd;
+}
+
+.table-wrapper{
+  width: 1000px;
+  height: auto;
+  background-color: rgb(255, 251, 251);
+  margin: 0px 0 0 50px;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.125);
+  position: absolute;
+  right: 200px;
+  top: 50px;
+  text-align: center;
+}
+
+table{
+  width: 100%;
+  height: 10px;
+  color: #757575;
+}
+
+th{
+  padding: 15px;
+  color: #737373;
+  user-select: none;
+}
+
+td{
+  padding: 20px;
+  color: #464545;
+}
