@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+    <title>Clothing Inventory</title>
+</head>
+
+<body>
+    
+    <div class="sidebar open">
+        <div class="logo_details">
+            <i class='bx bxl-xing icon'></i>
+            <div class="logo_name">Project</div>
+            <i class="bx bx-menu" id="btn"></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <a href="main.html">
+                    <i class='bx bx-home'></i>
+                    <span class="link_name">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="form.html">
+                    <i class='bx bxs-shopping-bag'></i>
+                    <span class="link_name">Register Product</span>
+                </a>
+            </li>
+            <li>
+                <a href="table.html">
+                    <i class='bx bx-store'></i>
+                    <span class="link_name">Inventory</span>
+                </a>
+            </li>
+            <li class="profile">
+                <div class="profile_details">
+                    <i class='bx bx-user toggle'></i>
+                    <div class="name">Admin</div>
+                    <i class="bx bx-log-out" id="logout"></i>
+                </div>
+            </li>
+        </ul>
+    </div>
+       <script>
+        const sidebar = document.querySelector(".sidebar");
+        const closeBtn = document.querySelector("#btn");
+        
+        closeBtn.addEventListener("click",function(){
+            sidebar.classList.toggle("open")
+        })
+       </script>
+      
+    
+</body>
+</html>
